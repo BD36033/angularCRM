@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-administration-detail',
@@ -22,7 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    MatIconModule
   ]
 })
 export class AdministrationDetailComponent implements OnInit {
@@ -30,6 +34,7 @@ export class AdministrationDetailComponent implements OnInit {
   salle?: Administration;
   hasTable = false;
   hasVisio = false;
+  isNewSalle = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,13 +44,24 @@ export class AdministrationDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.salle = this.administrationService.getSalleById(id);
-    
-    if (this.salle) {
-      this.hasTable = this.salle.equipements.includes(EquipementType.TABLE);
-      this.hasVisio = this.salle.equipements.includes(EquipementType.VISIO);
+    if (id) {
+      this.salle = this.administrationService.getSalleById(id);
+      if (this.salle) {
+        this.hasTable = this.salle.equipements.includes(EquipementType.TABLE);
+        this.hasVisio = this.salle.equipements.includes(EquipementType.VISIO);
+      } else {
+        this.goBack();
+      }
     } else {
-      this.goBack();
+      this.isNewSalle = true;
+      this.salle = new Administration(
+        0,
+        '',
+        '',
+        0,
+        false,
+        []
+      );
     }
   }
 
@@ -70,15 +86,24 @@ export class AdministrationDetailComponent implements OnInit {
 
   save() {
     if (this.salle) {
-      this.administrationService.updateSalle(this.salle);
-      this.goBack();
+      if (this.isNewSalle) {
+        const { id, ...salleData } = this.salle;
+        this.administrationService.createSalle(salleData).subscribe(() => {
+          this.goBack();
+        });
+      } else {
+        this.administrationService.updateSalle(this.salle).subscribe(() => {
+          this.goBack();
+        });
+      }
     }
   }
 
   delete() {
     if (this.salle) {
-      this.administrationService.deleteSalle(this.salle.id);
-      this.goBack();
+      this.administrationService.deleteSalle(this.salle.id).subscribe(() => {
+        this.goBack();
+      });
     }
   }
 

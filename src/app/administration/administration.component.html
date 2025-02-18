@@ -1,7 +1,18 @@
 <div class="administration-container">
     <h1 class="administration-title">Administration des salles</h1>
     <div class="administration-content">
-        <!--Tableau V1 sans Mat table car je suis un flemmard !-->
+         <!-- Formulaire de recherche à ajouter si j'ai pas la flemme -->
+            <!-- <form
+            [formGroup]="formSearchSalle"
+            (ngSubmit)="onSubmit()"
+            autocomplete="off"
+        > -->
+        <!-- Bouton pour créer une nouvelle salle -->
+        <button mat-raised-button color="primary" (click)="createSalle()">
+            <mat-icon>add</mat-icon>
+            Créer une nouvelle salle
+        </button>
+        <!--Tableau V2 avec Mat table pour pas être un flemmard !-->
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" class="full-width-table">
           <!-- ID Column -->

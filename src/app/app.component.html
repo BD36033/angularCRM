@@ -176,26 +176,96 @@
     list-style-type: none;
     display: flex;
     gap: 1rem;
+    align-items: center;
   }
 
   .navbar a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .navbar a:hover {
     text-decoration: underline;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+  }
+
+  .username {
+    font-weight: bold;
+  }
+
+  .logout-btn {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+
+  .logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .login-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .logout-btn.white-text {
+    color: white !important;
+  }
+
+  .logout-btn.white-text mat-icon {
+    color: white !important;
   }
 </style>
 
 <nav class="navbar">
   <h1 style="color:white">{{title}}</h1>
   <ul>
+    <li><a href="/">Accueil</a></li>
     <li><a href="/administration">Administration</a></li>
     <li><a href="#about">Villes</a></li>
     <li><a href="#services">Réunions</a></li>
     <li><a href="#contact">Contact</a></li>
+    <ng-container *ngIf="(authService.isAuthenticated$ | async); else loginButton">
+      <li class="user-info">
+        <span class="username">Admin</span>
+        <button mat-button (click)="logout()" class="logout-btn white-text">
+          <mat-icon>logout</mat-icon>
+          Déconnexion
+        </button>
+      </li>
+    </ng-container>
+    <ng-template #loginButton>
+      <li>
+        <a href="/login" class="login-btn">
+          <mat-icon>login</mat-icon>
+          Connexion
+        </a>
+      </li>
+    </ng-template>
   </ul>
 </nav>
 

@@ -5,22 +5,20 @@ import { routes } from './app.routes';
 import { AppComponent } from './app.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { LoginComponent } from './login/login.component';
-import {AdministrationComponent } from './administration/administration.component';
-import { CommonModule } from '@angular/common';
-import { AdministrationModule } from './administration/administration.module';
-
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccueilComponent,
-    LoginComponent,
-    AdministrationComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
-    AdministrationModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

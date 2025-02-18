@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { Administration, EquipementType } from './administration';
+import { Administration } from './administration';
 import { AdministrationService } from './administration.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'crm-administration',
@@ -20,7 +21,8 @@ import { MatTableDataSource } from '@angular/material/table';
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ]
 })
 export class AdministrationComponent implements OnInit {
@@ -42,6 +44,12 @@ export class AdministrationComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
+ 
+ //reprise des fonctions de l'exemple Hero
+
+  createSalle() {
+    this.router.navigate(['/administration/new']);
+  }
 
   editSalle(id: number) {
     this.router.navigate(['/administration', id]);
@@ -49,8 +57,18 @@ export class AdministrationComponent implements OnInit {
 
   deleteSalle(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')) {
-      this.administrationService.deleteSalle(id);
-      // La liste sera mise à jour automatiquement via l'observable
+      this.administrationService.deleteSalle(id).subscribe({
+        next: () => {
+          // Mise à jour de la liste après suppression
+          this.administrationService.getSalles().subscribe(salles => {
+            this.dataSource.data = salles;
+          });
+        },
+        error: (error) => {
+          console.error('Erreur lors de la suppression:', error);
+          alert('Une erreur est survenue lors de la suppression de la salle');
+        }
+      });
     }
   }
 }

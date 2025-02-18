@@ -1,50 +1,110 @@
-<div class="container mt-4">
-  <mat-card class="detail-card">
-    <mat-card-header>
-      <mat-card-title>Détails de la salle #{{salle?.id}}</mat-card-title>
-    </mat-card-header>
+<div class="form-container">
+  <h2>{{isNewSalle ? 'Nouvelle salle' : 'Modifier la salle #' + salle?.id}}</h2>
 
-    <mat-card-content>
-      <form #salleForm="ngForm" *ngIf="salle">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Adresse</mat-label>
-          <input matInput [(ngModel)]="salle.adresse" name="adresse" required>
-        </mat-form-field>
+  <form #salleForm="ngForm" *ngIf="salle" class="salle-form">
+    <!-- Adresse -->
+    <div class="form-field">
+      <label for="adresse">Adresse</label>
+      <input id="adresse"
+             [(ngModel)]="salle.adresse"
+             name="adresse"
+             required
+             minlength="5"
+             maxlength="100"
+             pattern="^[a-zA-Z0-9\s,'-]*$"
+             #adresse="ngModel"
+             class="form-input">
+             <!-- gestion des erreurs et des confitions de validaiotn -->
+      <div class="error-message" *ngIf="adresse.touched && adresse.errors">
+        <span *ngIf="adresse.errors?.['required']">L'adresse est requise</span>
+        <span *ngIf="adresse.errors?.['minlength']">L'adresse doit contenir au moins 5 caractères</span>
+        <span *ngIf="adresse.errors?.['pattern']">Format d'adresse invalide</span>
+      </div>
+    </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Téléphone</mat-label>
-          <input matInput [(ngModel)]="salle.telephone" name="telephone" required>
-        </mat-form-field>
+    <!-- Capacité -->
+    <div class="form-field">
+      <label for="capacite">Capacité</label>
+      <input id="capacite"
+             type="number"
+             [(ngModel)]="salle.capacite"
+             name="capacite"
+             required
+             min="1"
+             max="1000"
+             #capacite="ngModel"
+             class="form-input">
+      <div class="error-message" *ngIf="capacite.touched && capacite.errors">
+         <!-- gestion des erreurs et des confitions de validaiotn -->
+        <span *ngIf="capacite.errors?.['required']">La capacité est requise</span>
+        <span *ngIf="capacite.errors?.['min']">La capacité minimum est de 1 personne</span>
+        <span *ngIf="capacite.errors?.['max']">La capacité maximum est de 1000 personnes</span>
+      </div>
+    </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Capacité</mat-label>
-          <input matInput type="number" [(ngModel)]="salle.capacite" name="capacite" required>
-        </mat-form-field>
+    <!-- Téléphone -->
+    <div class="form-field">
+      <label for="telephone">Téléphone</label>
+      <input id="telephone"
+             [(ngModel)]="salle.telephone"
+             name="telephone"
+             required
+             pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$"
+             #telephone="ngModel"
+             class="form-input">
+              <!-- gestion des erreurs et des confitions de validaiotn -->
+      <div class="error-message" *ngIf="telephone.touched && telephone.errors">
+        <span *ngIf="telephone.errors?.['required']">Le numéro de téléphone est requis</span>
+        <span *ngIf="telephone.errors?.['pattern']">Format de téléphone invalide (ex: 0123456789 ou +33123456789)</span>
+      </div>
+    </div>
 
-        <mat-checkbox [(ngModel)]="salle.accesibilite" name="accesibilite" class="full-width">
-          Accessible handicapé
-        </mat-checkbox>
+    <!-- Accessibilité -->
+    <div class="form-field checkbox-field">
+      <label class="checkbox-container">
+        <input type="checkbox"
+               [(ngModel)]="salle.accesibilite"
+               name="accesibilite">
+        <span class="checkbox-label">Accessible Handicapé ?</span>
+      </label>
+    </div>
 
-        <div class="equipements-section">
-          <mat-label>Équipements</mat-label>
-          <section class="equipements-list">
-            <mat-checkbox [(ngModel)]="hasTable" (change)="updateEquipements('Table')" name="equipTable">
-              Table
-            </mat-checkbox>
-            <mat-checkbox [(ngModel)]="hasVisio" (change)="updateEquipements('Visio')" name="equipVisio">
-              Visio
-            </mat-checkbox>
-          </section>
-        </div>
-      </form>
-    </mat-card-content>
+    <!-- Équipements -->
+    <div class="form-field">
+      <label>Équipements</label>
+      <div class="equipements-list">
+        <label class="checkbox-container">
+          <input type="checkbox"
+                 [(ngModel)]="hasTable"
+                 (change)="updateEquipements('Table')"
+                 name="equipTable">
+          <span class="checkbox-label">
+            <mat-icon>desktop_windows</mat-icon>
+            <span class="icon-label">Table</span>
+          </span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox"
+                 [(ngModel)]="hasVisio"
+                 (change)="updateEquipements('Visio')"
+                 name="equipVisio">
+          <span class="checkbox-label">
+            <mat-icon>videocam</mat-icon>
+            <span class="icon-label">Visio</span>
+          </span>
+        </label>
+      </div>
+    </div>
 
-    <mat-card-actions align="end">
-      <button mat-button color="warn" (click)="goBack()">Annuler</button>
-      <button mat-button color="warn" (click)="delete()">Supprimer</button>
-      <button mat-raised-button color="primary" (click)="save()" [disabled]="!salleForm.form.valid">
-        Enregistrer
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="goBack()">Annuler</button>
+      <button type="button" 
+              class="btn btn-primary" 
+              (click)="save()"
+              [disabled]="!salleForm.form.valid">
+        {{isNewSalle ? 'Enregistrer' : 'Modifier'}}
       </button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+  </form>
 </div> 

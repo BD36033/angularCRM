@@ -251,7 +251,7 @@
     <li><a href="#contact">Contact</a></li>
     <ng-container *ngIf="(authService.isAuthenticated$ | async); else loginButton">
       <li class="user-info">
-        <span class="username">Admin</span>
+        <span class="username">{{ authService.currentUser$ | async }}</span>
         <button mat-button (click)="logout()" class="logout-btn white-text">
           <mat-icon>logout</mat-icon>
           Déconnexion

@@ -26,7 +26,7 @@ export class AdministrationService {
   constructor(private http: HttpClient) {
     this.loadSalles();
   }
-
+  //méthode GET on récupère les données de la réponse et on les "mappe" pour les convertir en données d'administration
   private loadSalles() {
     this.http.get<RoomResponse[]>(this.apiUrl).pipe(
       tap(data => {
@@ -36,6 +36,8 @@ export class AdministrationService {
     ).subscribe();
   }
 
+
+  // map pour convertir les données de la réponse en données d'administration
   private mapToAdministration(response: RoomResponse): Administration {
     return new Administration(
       response.id,
@@ -47,10 +49,12 @@ export class AdministrationService {
     );
   }
 
+  // map pour convertir les équipements en type EquipementType
   private mapEquipements(equipments: string[]): EquipementType[] {
     return equipments.map(eq => eq as EquipementType);
   }
 
+  //different de loadSalles car on ne récupère pas les données de l'API on renvoie simplement l’Observable de sallesSubject, ecoute les changements sans rappeler l'API
   getSalles(): Observable<Administration[]> {
     return this.sallesSubject.asObservable();
   }

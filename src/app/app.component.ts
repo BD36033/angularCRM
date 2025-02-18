@@ -20,7 +20,7 @@ import { MatCardModule } from '@angular/material/card';
   ]
 })
 export class AppComponent {
-  title = 'Réservations des locaux';
+  title = 'Gestionnaire de locaux';
 
   constructor(public authService: AuthService) {}
 

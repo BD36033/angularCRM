@@ -1,0 +1,36 @@
+.container {
+  max-width: 800px;
+}
+
+.card {
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-check {
+  margin-bottom: 10px;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+.detail-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.equipements-section {
+  margin: 20px 0;
+}
+
+.equipements-list {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+} 

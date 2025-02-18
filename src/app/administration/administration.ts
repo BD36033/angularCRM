@@ -18,7 +18,7 @@ export class Administration {
         telephone: string,
         capacite: number,
         accesibilite: boolean,
-        equipements: string[]
+        equipements: EquipementType[]
     ) {
         this.id = id;
         this.adresse = adresse;

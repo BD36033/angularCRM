@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <mat-card class="detail-card">
+    <mat-card-header>
+      <mat-card-title>Détails de la salle #{{salle?.id}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form #salleForm="ngForm" *ngIf="salle">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Adresse</mat-label>
+          <input matInput [(ngModel)]="salle.adresse" name="adresse" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Téléphone</mat-label>
+          <input matInput [(ngModel)]="salle.telephone" name="telephone" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Capacité</mat-label>
+          <input matInput type="number" [(ngModel)]="salle.capacite" name="capacite" required>
+        </mat-form-field>
+
+        <mat-checkbox [(ngModel)]="salle.accesibilite" name="accesibilite" class="full-width">
+          Accessible handicapé
+        </mat-checkbox>
+
+        <div class="equipements-section">
+          <mat-label>Équipements</mat-label>
+          <section class="equipements-list">
+            <mat-checkbox [(ngModel)]="hasTable" (change)="updateEquipements('Table')" name="equipTable">
+              Table
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="hasVisio" (change)="updateEquipements('Visio')" name="equipVisio">
+              Visio
+            </mat-checkbox>
+          </section>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button color="warn" (click)="goBack()">Annuler</button>
+      <button mat-button color="warn" (click)="delete()">Supprimer</button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!salleForm.form.valid">
+        Enregistrer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div> 

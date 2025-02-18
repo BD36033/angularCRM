@@ -21,3 +21,11 @@
 .administration-table button {
   margin-right: 5px;
 }
+
+.full-width-table {
+  width: 100%;
+}
+
+.equipement-icon {
+  margin-right: 8px;
+}

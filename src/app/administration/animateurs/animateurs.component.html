@@ -1,1 +1,74 @@
-<p>animateurs works!</p>
+<div class="admin-container">
+    <h2>Administration des animateurs</h2>
+  
+    <!-- Formulaire de recherche -->
+    <form [formGroup]="searchForm" class="search-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Rechercher par nom</mat-label>
+        <input matInput formControlName="name" placeholder="Nom">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Rechercher par ville</mat-label>
+        <input matInput formControlName="city" placeholder="Ville">
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+  
+      <button mat-button *ngIf="searchForm.value.name || searchForm.value.city"
+              (click)="searchForm.reset(); loadAnimateurs()"
+              class="clear-button">
+        <mat-icon>clear</mat-icon>
+        Réinitialiser
+      </button>
+    </form>
+  
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let animateur">{{animateur.id}}</td>
+      </ng-container>
+  
+      <!-- Nom Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let animateur">{{animateur.name}}</td>
+      </ng-container>
+  
+      <!-- Villz Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>Ville</th>
+        <td mat-cell *matCellDef="let animateur">{{animateur.city}}</td>
+      </ng-container>
+  
+      <!-- Adresse Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Code Département</th>
+        <td mat-cell *matCellDef="let animateur">{{animateur.address}}</td>
+      </ng-container>
+  
+      <!-- Mail Column -->
+      <ng-container matColumnDef="mail">
+        <th mat-header-cell *matHeaderCellDef>Mail</th>
+        <td mat-cell *matCellDef="let animateur">{{animateur.mail}}</td>
+      </ng-container>
+  
+      <!-- Telephone Column -->
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef>Telephone</th>
+        <td mat-cell *matCellDef="let animateur">{{animateur.telephone}}</td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator 
+      [length]="totalAnimateurs"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="loadAnimateurs($event)"
+      aria-label="Sélectionner la page">
+    </mat-paginator>
+  </div>

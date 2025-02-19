@@ -14,7 +14,7 @@ interface PaginatedResponse {
   providedIn: 'root'
 })
 export class AnimateursService {
-  private apiUrl = 'http://localhost:3000/animators'; // Remplacez par l'URL de votre API
+  private apiUrl = 'http://localhost:3000/animators';
   private fields = 'name,city,address,mail,telephone';
   constructor(private http: HttpClient) {}
 

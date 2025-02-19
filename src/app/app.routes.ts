@@ -52,7 +52,7 @@ export const routes: Routes = [
     //regroupement des routes de la gestion des animateurs
     {
       path: 'animateurs',
-      // canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
       data: { requiresAdmin: true },
       loadComponent: () => import('./administration/animateurs/animateurs-container.component')
         .then(m => m.AnimateursContainerComponent),

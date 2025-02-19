@@ -32,5 +32,29 @@ export const routes: Routes = [
             .then(m => m.AdministrationDetailComponent)
         }
       ]
+    },
+
+    //regroupement des routes de la gestion des villes
+    {
+      path: 'villes',
+      // canActivate: [AuthGuard],
+      data: { requiresAdmin: true },
+      loadComponent: () => import('./villes/villes-container.component')
+        .then(m => m.VillesContainerComponent),
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./villes/villes.component')
+            .then(m => m.VillesComponent)
+        }
+      ]
+
+
+
     }
+
+
+
+
+
 ];

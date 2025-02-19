@@ -6,6 +6,36 @@
     Nouvelle salle
   </button>
 
+  <form [formGroup]="formSearchSalles" (ngSubmit)="onSubmit()" class="search-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Adresse</mat-label>
+      <input matInput formControlName="adresse" placeholder="Rechercher par adresse">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Capacité minimum</mat-label>
+      <input matInput type="number" formControlName="capaciteMin">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Capacité maximum</mat-label>
+      <input matInput type="number" formControlName="capaciteMax">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Équipements</mat-label>
+      <mat-select formControlName="equipements" multiple>
+        <mat-option value="ECRAN">Écran</mat-option>
+        <mat-option value="WEBCAM">Webcam</mat-option>
+        <mat-option value="TABLE">Table</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="accessibilite">
+      Accessible PMR
+    </mat-checkbox>
+  </form>
+
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="id">

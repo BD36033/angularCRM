@@ -1,3 +1,129 @@
-/* .spacer {
-    flex: 1 1 auto;
-  } */
+/* Variables globales */
+:root {
+  --navbar-height: 64px;
+  --navbar-height-mobile: 56px;
+  --bright-blue: oklch(51.01% 0.274 263.83);
+  --electric-violet: oklch(53.18% 0.28 296.97);
+  --french-violet: oklch(47.66% 0.246 305.88);
+  --vivid-pink: oklch(69.02% 0.277 332.77);
+  --hot-red: oklch(61.42% 0.238 15.34);
+  --orange-red: oklch(63.32% 0.24 31.68);
+  --gray-900: oklch(19.37% 0.006 300.98);
+  --gray-700: oklch(36.98% 0.014 302.71);
+  --gray-400: oklch(70.9% 0.015 304.04);
+}
+
+/* Navbar styles */
+.navbar {
+  /* Autres options de couleurs Material Design */
+  /* background-color: #e91e63; Pink */
+  /* background-color: #3f51b5; Indigo */
+  /* background-color: #2196f3; Blue */
+  /* background-color: #009688; Teal */
+  background-color: #673ab7; /* Deep Purple par défaut */
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.navbar ul {
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar a:hover {
+  opacity: 0.8;
+}
+
+/* User info et boutons */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  margin-left: auto;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.logout-btn {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Icônes Material */
+mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* Main content */
+.main {
+  margin-top: var(--navbar-height);
+  padding: 20px;
+  min-height: calc(100vh - var(--navbar-height));
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar ul {
+    flex-wrap: wrap;
+  }
+  
+  .main {
+    margin-top: var(--navbar-height-mobile);
+    min-height: calc(100vh - var(--navbar-height-mobile));
+    padding: 16px;
+  }
+}

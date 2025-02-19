@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'crm-accueil',
-  imports: [],
+  selector: 'app-accueil',
   templateUrl: './accueil.component.html',
-  styleUrl: './accueil.component.css'
+  styleUrls: ['./accueil.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class AccueilComponent {
 

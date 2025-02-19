@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from './services/auth.service';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'crm-root',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   standalone: true,
@@ -15,8 +14,7 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     RouterModule,
     MatIconModule,
-    MatButtonModule,
-    MatCardModule
+    MatButtonModule
   ]
 })
 export class AppComponent {

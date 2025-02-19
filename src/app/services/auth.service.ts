@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -7,51 +7,58 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private isAdminAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
-  
-  // Ajout d'un BehaviorSubject pour le nom d'utilisateur
-  private currentUserSubject = new BehaviorSubject<string>('');
-  currentUser$ = this.currentUserSubject.asObservable();
+  isAdminAuthenticated$ = this.isAdminAuthenticatedSubject.asObservable();
 
-  //Méthode temporaire car l'API ne renvoie pas de données utilisateurs
-  private readonly VALID_USERNAME = 'bdessis';
-  private readonly VALID_PASSWORD = 'DevBD3336++';
+  private readonly VALID_USERNAME = 'user1';
+  private readonly VALID_PASSWORD = 'pdw123';
+  private readonly VALID_ADMIN_USERNAME = 'bdessis';
+  private readonly VALID_ADMIN_PASSWORD = 'DevBD3336++';
 
   constructor(private router: Router) {
-    // Vérifie si un token existe dans le localStorage
     const token = localStorage.getItem('auth_token');
+    const adminToken = localStorage.getItem('admin_auth_token');
+    
     if (token) {
       this.isAuthenticatedSubject.next(true);
-      // Récupérer le nom d'utilisateur stocké
-      const username = localStorage.getItem('username');
-      if (username) {
-        this.currentUserSubject.next(username);
-      }
+    }
+    if (adminToken) {
+      this.isAdminAuthenticatedSubject.next(true);
     }
   }
 
-  //fonction de vérification de l'authentification
   login(username: string, password: string): boolean {
     if (username === this.VALID_USERNAME && password === this.VALID_PASSWORD) {
-      localStorage.setItem('auth_token', 'dummy_token');
-      localStorage.setItem('username', username); // Stocker le nom d'utilisateur
+      localStorage.setItem('auth_token', 'user_token');
       this.isAuthenticatedSubject.next(true);
-      this.currentUserSubject.next(username);
       return true;
     }
     return false;
   }
 
-  //fonction de déconnexion
+  loginAdmin(username: string, password: string): boolean {
+    if (username === this.VALID_ADMIN_USERNAME && password === this.VALID_ADMIN_PASSWORD) {
+      localStorage.setItem('admin_auth_token', 'admin_token');
+      this.isAdminAuthenticatedSubject.next(true);
+      return true;
+    }
+    return false;
+  }
+
   logout() {
     localStorage.removeItem('auth_token');
-    localStorage.removeItem('username');
+    localStorage.removeItem('admin_auth_token');
     this.isAuthenticatedSubject.next(false);
-    this.currentUserSubject.next('');
+    this.isAdminAuthenticatedSubject.next(false);
     this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
     return this.isAuthenticatedSubject.value;
+  }
+
+  isAdminAuthenticated(): boolean {
+    return this.isAdminAuthenticatedSubject.value;
   }
 } 

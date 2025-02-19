@@ -10,9 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-login-admin',
+  templateUrl: './login-admin.component.html',
+  styleUrls: ['./login-admin.component.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -24,7 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ]
 })
-export class LoginComponent {
+export class LoginAdminComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
@@ -35,11 +35,10 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    if (this.authService.login(this.username, this.password)) {
-      //je redirige l'utilisateur vers la page d'accueil
-      this.router.navigate(['/']);
+    if (this.authService.loginAdmin(this.username, this.password)) {
+      this.router.navigate(['/administration']);
     } else {
-      this.errorMessage = 'Identifiants invalides';
+      this.errorMessage = 'Identifiants administrateur invalides';
     }
   }
 }

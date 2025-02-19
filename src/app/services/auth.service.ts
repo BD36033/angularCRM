@@ -30,6 +30,10 @@ export class AuthService {
   }
 
   login(username: string, password: string): boolean {
+    if (this.isAdminAuthenticatedSubject.value) {
+      return false;
+    }
+
     if (username === this.VALID_USERNAME && password === this.VALID_PASSWORD) {
       this.isAuthenticatedSubject.next(true);
       this.currentUserSubject.next(username);
@@ -42,6 +46,9 @@ export class AuthService {
 
   loginAdmin(username: string, password: string): boolean {
     if (username === this.VALID_ADMIN_USERNAME && password === this.VALID_ADMIN_PASSWORD) {
+      this.isAuthenticatedSubject.next(false);
+      localStorage.removeItem('isAuthenticated');
+
       this.isAdminAuthenticatedSubject.next(true);
       this.currentUserSubject.next(username);
       localStorage.setItem('isAdminAuthenticated', 'true');
@@ -58,7 +65,7 @@ export class AuthService {
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('isAdminAuthenticated');
     localStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   isAuthenticated(): boolean {

@@ -44,22 +44,19 @@ export class AdministrationComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
- 
- //reprise des fonctions de l'exemple Hero
 
-  createSalle() {
+  onNew() {
     this.router.navigate(['/administration/new']);
   }
 
-  editSalle(id: number) {
+  onEdit(id: number) {
     this.router.navigate(['/administration', id]);
   }
 
-  deleteSalle(id: number) {
+  onDelete(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')) {
       this.administrationService.deleteSalle(id).subscribe({
         next: () => {
-          // Mise à jour de la liste après suppression
           this.administrationService.getSalles().subscribe(salles => {
             this.dataSource.data = salles;
           });

@@ -1,83 +1,68 @@
-<div class="administration-container">
-    <h1 class="administration-title">Administration des salles</h1>
-    <div class="administration-content">
-         <!-- Formulaire de recherche à ajouter si j'ai pas la flemme -->
-            <!-- <form
-            [formGroup]="formSearchSalle"
-            (ngSubmit)="onSubmit()"
-            autocomplete="off"
-        > -->
-        <!-- Bouton pour créer une nouvelle salle -->
-        <button mat-raised-button color="primary" (click)="createSalle()">
-            <mat-icon>add</mat-icon>
-            Créer une nouvelle salle
+<div class="admin-container">
+  <h2>Administration des salles</h2>
+  
+  <button mat-raised-button color="primary" (click)="onNew()">
+    <mat-icon>add</mat-icon>
+    Nouvelle salle
+  </button>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let salle">{{salle.id}}</td>
+    </ng-container>
+
+    <!-- Adresse Column -->
+    <ng-container matColumnDef="adresse">
+      <th mat-header-cell *matHeaderCellDef>Adresse</th>
+      <td mat-cell *matCellDef="let salle">{{salle.adresse}}</td>
+    </ng-container>
+
+    <!-- Telephone Column -->
+    <ng-container matColumnDef="telephone">
+      <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+      <td mat-cell *matCellDef="let salle">{{salle.telephone}}</td>
+    </ng-container>
+
+    <!-- Capacite Column -->
+    <ng-container matColumnDef="capacite">
+      <th mat-header-cell *matHeaderCellDef>Capacité</th>
+      <td mat-cell *matCellDef="let salle">{{salle.capacite}}</td>
+    </ng-container>
+
+    <!-- Accessibilite Column -->
+    <ng-container matColumnDef="accessibilite">
+      <th mat-header-cell *matHeaderCellDef>Accessibilité</th>
+      <td mat-cell *matCellDef="let salle">
+        <mat-icon *ngIf="salle.accesibilite">accessible</mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Equipements Column -->
+    <ng-container matColumnDef="equipements">
+      <th mat-header-cell *matHeaderCellDef>Équipements</th>
+      <td mat-cell *matCellDef="let salle">
+        <mat-icon *ngFor="let equipement of salle.equipements" class="equipement-icon">
+          {{equipement === 'Table' ? 'desktop_windows' : 'videocam'}}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let salle">
+        <button mat-icon-button color="primary" (click)="onEdit(salle.id)">
+          <mat-icon>edit</mat-icon>
         </button>
-        <!--Tableau V2 avec Mat table pour pas être un flemmard !-->
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" class="full-width-table">
-          <!-- ID Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let salle">{{salle.id}}</td>
-          </ng-container>
+        <button mat-icon-button color="warn" (click)="onDelete(salle.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-          <!-- Adresse Column -->
-          <ng-container matColumnDef="adresse">
-            <th mat-header-cell *matHeaderCellDef>Adresse</th>
-            <td mat-cell *matCellDef="let salle">{{salle.adresse}}</td>
-          </ng-container>
-
-          <!-- Telephone Column -->
-          <ng-container matColumnDef="telephone">
-            <th mat-header-cell *matHeaderCellDef>Téléphone</th>
-            <td mat-cell *matCellDef="let salle">{{salle.telephone}}</td>
-          </ng-container>
-
-          <!-- Capacite Column -->
-          <ng-container matColumnDef="capacite">
-            <th mat-header-cell *matHeaderCellDef>Capacité</th>
-            <td mat-cell *matCellDef="let salle">{{salle.capacite}}</td>
-          </ng-container>
-
-          <!-- Accessibilite Column -->
-          <ng-container matColumnDef="accessibilite">
-            <th mat-header-cell *matHeaderCellDef>Accessibilité</th>
-            <td mat-cell *matCellDef="let salle">
-              <mat-icon *ngIf="salle.accesibilite">accessible</mat-icon>
-            </td>
-          </ng-container>
-
-          <!-- Equipements Column -->
-          <ng-container matColumnDef="equipements">
-            <th mat-header-cell *matHeaderCellDef>Équipements</th>
-            <td mat-cell *matCellDef="let salle">
-              <mat-icon *ngFor="let equipement of salle.equipements" class="equipement-icon">
-                {{equipement === 'Table' ? 'desktop_windows' : 'videocam'}}
-              </mat-icon>
-            </td>
-          </ng-container>
-
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let salle">
-              <button mat-icon-button color="primary" (click)="editSalle(salle.id)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="deleteSalle(salle.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                       showFirstLastButtons
-                       aria-label="Sélectionner une page">
-        </mat-paginator>
-      </div>
-    </div>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

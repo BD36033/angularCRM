@@ -99,7 +99,7 @@ mat-icon {
 
 /* Main content */
 .main {
-  margin-top: var(--navbar-height);
+  margin-top: calc(var(--navbar-height) + 1rem);
   padding: 20px;
   min-height: calc(100vh - var(--navbar-height));
   width: 100%;
@@ -125,5 +125,112 @@ mat-icon {
     margin-top: var(--navbar-height-mobile);
     min-height: calc(100vh - var(--navbar-height-mobile));
     padding: 16px;
+  }
+}
+
+/* Dashboard styles */
+.dashboard {
+  padding: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 4rem;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  margin-top: 0;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+mat-card-header {
+  padding: 1rem 1rem 0.25rem;
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  padding: 0.25rem 1rem;
+}
+
+mat-card-content p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+mat-card-actions {
+  padding: 1rem;
+  margin: 0;
+  margin-top: auto;
+}
+
+.card button {
+  width: 100%;
+  height: 36px;
+  background-color: #673ab7;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.card button:hover {
+  background-color: #5e35b1;
+}
+
+.card mat-icon {
+  margin-right: 8px;
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-top: var(--navbar-height-mobile);
+  }
+
+  .dashboard {
+    padding: 0.25rem;
+    padding-top: 3rem;
+  }
+
+  .card-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card {
+    min-height: 140px;
   }
 }

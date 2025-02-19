@@ -4,12 +4,26 @@
       <mat-icon>home</mat-icon>
       {{title}}
     </a></li>
-    <li><a routerLink="/administration">Administration</a></li>
-    <li><a routerLink="/villes">Villes</a></li>
-    <li><a routerLink="/reunions">Réunions</a></li>
-    <li><a routerLink="/contact">Contact</a></li>
-    
-    <ng-container *ngIf="(authService.isAuthenticated$ | async); else loginButton">
+
+    <!-- Menu admin -->
+    <ng-container *ngIf="authService.isAdminAuthenticated$ | async">
+      <li><a routerLink="/administration">Administration</a></li>
+      <li><a routerLink="/villes">Villes</a></li>
+      <li><a routerLink="/reunions">Réunions</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+      <li class="user-info">
+        <span class="username">Admin: {{ authService.currentUser$ | async }}</span>
+        <button mat-button (click)="logout()" class="logout-btn">
+          <mat-icon>logout</mat-icon>
+          Déconnexion
+        </button>
+      </li>
+    </ng-container>
+
+    <!-- Menu utilisateur -->
+    <ng-container *ngIf="authService.isAuthenticated$ | async">
+      <li><a routerLink="/villes">Villes</a></li>
+      <li><a routerLink="/reunions">Réunions</a></li>
       <li class="user-info">
         <span class="username">{{ authService.currentUser$ | async }}</span>
         <button mat-button (click)="logout()" class="logout-btn">
@@ -18,20 +32,125 @@
         </button>
       </li>
     </ng-container>
-    
-    <ng-template #loginButton>
+
+    <!-- Menu non connecté -->
+    <ng-container *ngIf="!(authService.isAuthenticated$ | async) && !(authService.isAdminAuthenticated$ | async)">
+      <li>
+        <a routerLink="/login-admin" class="login-btn">
+          <mat-icon>admin_panel_settings</mat-icon>
+          Admin
+        </a>
+      </li>
       <li>
         <a routerLink="/login" class="login-btn">
           <mat-icon>login</mat-icon>
-          Connexion
+          Utilisateur
         </a>
       </li>
-    </ng-template>
+    </ng-container>
   </ul>
 </nav>
 
 <main class="main">
-  <div class="content">
-    <router-outlet></router-outlet>
+  <div class="dashboard" *ngIf="router.url === '/'">
+    <h1>Bienvenue sur le Gestionnaire de Locaux</h1>
+    <div class="card-container">
+      <!-- Carte À propos -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>À propos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Découvrez notre solution de gestion de salles de réunion et d'espaces professionnels.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/about">
+            <mat-icon>info</mat-icon>
+            En savoir plus
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Carte Nos Services -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Nos Services</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Location de salles, équipements disponibles et services associés.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/services">
+            <mat-icon>business_center</mat-icon>
+            Découvrir
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Carte Contact -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Contact</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Besoin d'informations ? Notre équipe est à votre disposition.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/contact">
+            <mat-icon>contact_support</mat-icon>
+            Nous contacter
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Carte Connexion/Inscription -->
+      <mat-card class="card" *ngIf="!(authService.isAuthenticated$ | async) && !(authService.isAdminAuthenticated$ | async)">
+        <mat-card-header>
+          <mat-card-title>Espace Membre</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Connectez-vous pour accéder à votre espace personnel ou créer un compte.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/login">
+            <mat-icon>person</mat-icon>
+            Se connecter
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Carte FAQ -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>FAQ</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Consultez nos réponses aux questions fréquemment posées.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/faq">
+            <mat-icon>help</mat-icon>
+            Voir la FAQ
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Carte Actualités -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Actualités</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Restez informé des dernières nouvelles et mises à jour.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/news">
+            <mat-icon>article</mat-icon>
+            Lire plus
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
+  <router-outlet></router-outlet>
 </main>

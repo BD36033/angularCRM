@@ -1,1 +1,49 @@
-<p>accueil exercice base Angular (https://yatho.github.io/angular-room-tp-labs/codelab-angular-tp-fil-rouge/#2)</p>
+<div class="dashboard">
+  <h1>Tableau de bord</h1>
+  <div class="card-container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Gestion des Salles</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gérez vos salles de réunion facilement.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/administration">
+          <mat-icon>meeting_room</mat-icon>
+          Accéder
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Réunions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Planifiez et gérez vos réunions.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/reunions">
+          <mat-icon>event</mat-icon>
+          Accéder
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Villes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Consultez les informations par ville.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/villes">
+          <mat-icon>location_city</mat-icon>
+          Accéder
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

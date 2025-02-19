@@ -12,7 +12,8 @@
                  [(ngModel)]="username"
                  name="username"
                  required
-                 #usernameInput="ngModel">
+                 #usernameInput="ngModel"
+                 data-test="username-input">
           <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
             Le nom d'utilisateur est requis
           </mat-error>
@@ -25,7 +26,8 @@
                  [(ngModel)]="password"
                  name="password"
                  required
-                 #passwordInput="ngModel">
+                 #passwordInput="ngModel"
+                 data-test="password-input">
           <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
             Le mot de passe est requis
           </mat-error>
@@ -39,7 +41,8 @@
                 color="primary"
                 type="submit"
                 [disabled]="loginForm.invalid"
-                class="full-width">
+                class="full-width"
+                data-test="submit-button">
           Se connecter
         </button>
       </form>

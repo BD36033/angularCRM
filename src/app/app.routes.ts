@@ -1,27 +1,27 @@
 import { Routes } from '@angular/router';
-import { AccueilComponent } from './accueil/accueil.component';
-import { LoginComponent } from './login/login.component';
-import { AdministrationComponent } from './administration/administration.component';
-import { AdministrationDetailComponent } from './administration/administration-detail/administration-detail.component';
+
+
+
+
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     // Composant accueil
-    { path: '', component: AccueilComponent },
-    { path: 'login', component: LoginComponent },
+    { path: '', loadComponent: () => import('./accueil/accueil.component').then(m => m.AccueilComponent) },
+    { path: 'login', loadComponent: () => import('./login/login.component').then(m => m.LoginComponent) },
     { 
       path: 'administration', 
-      component: AdministrationComponent,
+      loadComponent: () => import('./administration/administration.component').then(m => m.AdministrationComponent),
       canActivate: [AuthGuard]
     },
     { 
       path: 'administration/new', 
-      component: AdministrationDetailComponent,
+      loadComponent: () => import('./administration/administration-detail/administration-detail.component').then(m => m.AdministrationDetailComponent),
       canActivate: [AuthGuard]
     },
     { 
       path: 'administration/:id', 
-      component: AdministrationDetailComponent,
+      loadComponent: () => import('./administration/administration-detail/administration-detail.component').then(m => m.AdministrationDetailComponent),
       canActivate: [AuthGuard]
     }
 ];

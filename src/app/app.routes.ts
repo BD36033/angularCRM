@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -48,9 +47,15 @@ export const routes: Routes = [
             .then(m => m.VillesComponent)
         }
       ]
+    },
 
-
-
+    //regroupement des routes de la gestion des animateurs
+    {
+      path: 'animateurs',
+      canActivate: [AuthGuard],
+      data: { requiresAdmin: true },
+      loadComponent: () => import('./administration/animateurs/animateurs-container.component')
+        .then(m => m.AnimateursContainerComponent),
     }
 
 

@@ -1,59 +1,127 @@
-# AngularCRM
+# Gestionnaire de Locaux
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
+Ce projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
 
-## Development server
+## Prérequis
 
-To start a local development server, run:
+- Node.js (v18 ou supérieur)
+- Angular CLI (`npm install -g @angular/cli`)
+- JSON Server pour l'API mock (`npm install -g json-server`)
 
+## Installation
+
+```bash
+# Cloner le projet
+git clone [URL_DU_REPO]
+
+# Installer les dépendances
+npm install
+```
+
+## Lancement du projet
+
+1. Démarrer l'API mock (dans un terminal) :
+```bash
+json-server --watch db.json
+```
+
+2. Démarrer le serveur de développement Angular (dans un autre terminal) :
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+L'application sera accessible à l'adresse `http://localhost:4200/`
 
-## Code scaffolding
+## Identifiants de connexion
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Utilisateur : `Personaliser dans le fichier auth.service.ts`
+- Mot de passe : `Personaliser dans le fichier auth.service.ts`
 
-```bash
-ng generate component component-name
-```
+## Tests
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Tests unitaires avec Karma
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+Pour exécuter les tests unitaires :
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+### Tests E2E avec Cypress
 
-For end-to-end (e2e) testing, run:
-
+1. Démarrer l'application en mode développement :
 ```bash
-ng e2e
+ng serve
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. Lancer Cypress :
+```bash
+# En mode interface graphique
+npx cypress open
 
-## Additional Resources
+# Ou en mode console
+npx cypress run
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Les tests Cypress se trouvent dans le dossier `cypress/e2e/`.
+
+### Tests E2E avec Playwright
+
+1. Installer Playwright :
+```bash
+npm init playwright@latest
+```
+
+2. Lancer les tests Playwright :
+```bash
+# En mode interface graphique
+npx playwright test --ui
+
+# Ou en mode console
+npx playwright test
+```
+
+Les tests Playwright se trouvent dans le dossier `tests/`.
+
+## Structure du projet
+
+```
+src/
+├── app/
+│   ├── administration/    # Module d'administration des salles
+│   ├── login/            # Composant de connexion
+│   ├── services/         # Services (auth, etc.)
+│   └── guards/           # Guards de sécurité
+├── assets/               # Ressources statiques
+└── environments/         # Configuration des environnements
+```
+
+## Fonctionnalités principales
+
+- Authentification utilisateur
+- Gestion des salles (CRUD)
+- Liste des réservations
+- Interface responsive
+
+## Commandes utiles
+
+```bash
+# Générer un nouveau composant
+ng generate component nouveau-composant
+
+# Construire l'application pour la production
+ng build --prod
+
+# Lancer les tests avec couverture de code
+ng test --code-coverage
+```
+
+## Contribution
+
+1. Créer une branche pour votre fonctionnalité
+2. Commiter vos changements
+3. Pousser la branche
+4. Créer une Pull Request
+
+## Licence
+
+[MIT](LICENSE)
